@@ -2,7 +2,7 @@
 import { createContext,useContext,useState,useEffect} from "react";
 import {onAuthStateChanged,getAuth,} from 'firebase/auth'
 import firebase_app from '@/firebase/config';
-import { useRouter,usePathname } from "next/navigation"
+import { usePathname } from "next/navigation"
 import ReactLoading from 'react-loading';
 
 const auth = getAuth(firebase_app)
@@ -14,7 +14,6 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({children,})=>{
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    const router = useRouter()
     const pathname = usePathname()
     const [path, setPath] = useState(pathname);
     const changepaths = (value)=>{

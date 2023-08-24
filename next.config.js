@@ -5,7 +5,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },images:{
-    domains:["ieeesbgeci.org"]
+    domains:["ieeesbgeci.org","i.imgur.com"]
   }
 }
 

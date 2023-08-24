@@ -1,9 +1,12 @@
 import Image from "next/image"
 import Slider from "../../components/dashboard/slider"
 import Dragon from "../../../public/asset/dragon_black.png"
-import Button from "@/components/addEvent/button"
+// import Button from "@/components/addEvent/button"
 import Logout from "@/components/logout/logout"
 import Dropdown from "@/components/dashboard/dropdown"
+export const metadata = {
+  title: 'Dashboard'
+}
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -16,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="">
           <Logout style="fixed top-2 left-2 md:top-6 md:left-[140px]" />
           <Dropdown/>
-          <Button />
+          {/* <Button /> */}
         </div>
         {children}
         <div className="h-14 bottom-0 md:hidden"></div>

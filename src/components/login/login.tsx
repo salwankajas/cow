@@ -7,10 +7,12 @@ import { useRouter } from "next/navigation"
 import { useEffect, useLayoutEffect, useState } from "react"
 import { useAuthContext } from "@/context/AuthContext";
 import ReactLoading from 'react-loading';
+import Invalid from "./invalid";
 export default function Logins(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading,setLoading] = useState(true)
+    const [invalid,setInvalid] = useState(false)
     const router = useRouter()
     const { user } = useAuthContext()
     const handleForm = async (event:any) => {
@@ -19,19 +21,23 @@ export default function Logins(){
         const { result, error } = await signIn(email, password);
 
         if (error) {
-            return console.log(error)
+            setInvalid(true)
+            setTimeout(()=>{
+                setInvalid(false)
+            },2000)
+            return console.log("error")
         }
 
         // else successful
-        console.log(result)
-        return router.push("/dashboard/cs")
+        // console.log(result)
+        return router.push("/dashboard/events/sb")
     }
 
     useEffect(()=>{
         if(!user){
             setLoading(false)
         }else{
-            router.push("/dashboard/cs")
+            router.push("/dashboard/events/sb")
         }
     },[])
     return(
@@ -46,6 +52,7 @@ export default function Logins(){
                     <input name="password" type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
                     <input type="submit" value="Sign in" className="bg-blue-500 text-white font-semibold" />
                 </form>
+                {invalid?<Invalid strings="Invalid username or password"/>:<></>}
             </div>}
         </>
     )

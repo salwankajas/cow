@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect } from "react"
 export default function Slider() {
     const pathname = usePathname()
+    const splits = pathname.split('/')
     const url: string[] = ["sb_black.png", "cs_black.png"]
     let last_scroll = 0;
     let slider: Element | null;
@@ -63,7 +64,7 @@ export default function Slider() {
         <>
             <div className="slider bg-white fixed h-14 w-full bottom-0 shadow-[0_6px_36px_-12px_rgba(0,0,0,0.3)] md:w-28 md:rounded-tr-[16px] md:rounded-br-[16px] md:left-0 md:h-[max(100vh,580px)] md:top-0">
                 <ul className="flex justify-around items-center h-full md:flex-col">
-                    {url.map((url: string, i: number) => { return <li key={i} className={`/${pathname.split("/")[1]}/${pathname.split("/")[2]}` == `/dashboard/${url.split("_")[0]}` ? "opacity-80" : "opacity-40"} ><Link href={`/dashboard/${url.split("_")[0]}`} ><Image src={`/asset/${url}`} alt={url} width="26" height="26" className="mx-auto" /></Link></li> })}
+                    {url.map((url: string, i: number) => { return <li key={i} className={`${splits[3]}` == `${url.split("_")[0]}` ? "opacity-80" : "opacity-40"} ><Link href={`/dashboard/events/${url.split("_")[0]}`} ><Image src={`/asset/${url}`} alt={url} width="26" height="26" className="mx-auto" /></Link></li> })}
                 </ul>
             </div>
         </>

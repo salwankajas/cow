@@ -1,5 +1,5 @@
 'use client'
-import DisplayEvents from "../displayEvent/displayEvents";
+import DisplayArchives from "../displayArchives/displayArchives";
 import {readUserData} from '../../app/dashboard/api/read';
 import { useEffect, useState } from "react";
 import {RiArrowDownSLine} from 'react-icons/ri'
@@ -16,7 +16,7 @@ interface Events {
     content: string;
     link: string;
 }
-export default function Events(props:{soceity:string}){
+export default function Archives(props:{soceity:string}){
     const [data,setData] = useState<any>({})
     const [limit,setLimit] = useState(5)
     const [show,setShow] = useState(true)
@@ -24,10 +24,10 @@ export default function Events(props:{soceity:string}){
         try{
             if((Object.keys(datas).length - Object.keys(data).length)<5){
                 setShow(false)
-
             }
         }catch{
             setShow(false)
+            setData(datas);
             return;
         }
         if(Object.keys(data).length!=Object.keys(datas).length){
@@ -37,12 +37,12 @@ export default function Events(props:{soceity:string}){
         }
     }
     useEffect(()=>{
-        readUserData(refreshingData,"events",props.soceity,limit);
+        readUserData(refreshingData,"archives",props.soceity,limit);
     },[limit])
 
     return(
         <>
-            {data?<>{Object.keys(data).reverse().map((ele,i)=><DisplayEvents name={data[ele].heading} id={ele} key={i} poster={data[ele].poster} day={data[ele].day} month={data[ele].month} time={data[ele].time} link={data[ele].link} content={data[ele].content} vanue={data[ele].vanue} soceity={props.soceity} />)}</> : <></>}
+            {data?<>{Object.keys(data).reverse().map((ele,i)=><DisplayArchives name={data[ele].heading} id={ele} key={i}  day={data[ele].day} month={data[ele].month} year={data[ele].year} content={data[ele].content} soceity={props.soceity} />)}</> :<></>}
             {show?<div className="text-ms my-10 cursor-pointer flex justify-center items-center" onClick={()=>{setLimit((limit)=>limit+5)}}>Load More<RiArrowDownSLine className="mx-0.5" /></div>:<></>}
         </>
     )

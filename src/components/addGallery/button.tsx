@@ -1,6 +1,6 @@
 'use client'
-import AddForm from "@/components/form/addForm"
-import AddEvent from '@/components/addEvent/AddEvent'
+import AddForm from "@/components/form/addGallery"
+import AddGallery from '@/components/addGallery/AddGallery'
 import { useState } from "react"
 
 export default function Button(props:{soceity:string}){
@@ -18,8 +18,8 @@ export default function Button(props:{soceity:string}){
     }
     return(
         <>
-            <AddEvent style="fixed top-2 right-2 md:top-6 md:right-6" onClick={addEvent} />
-            {events ? <AddForm remove={addEvent} soceity={props.soceity} /> : <></>}
+            <AddGallery style="fixed top-2 right-2 md:top-6 md:right-6" onClick={addEvent} />
+            {events ? <AddForm remove={addEvent} soceity={props.soceity} />  : <></>}
         </>
     )
 }

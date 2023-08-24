@@ -10,7 +10,7 @@ export default function Dropdown(){
     (()=>{
         let a=1;
         list.forEach(e=>{
-            if(e==pathname.split("/")[3]){
+            if(e==pathname.split("/")[2]){
                 menu[0]=e;
             }else{
                 menu[a]=e
@@ -49,9 +49,9 @@ export default function Dropdown(){
             <div className='dropdown-menu w-full text-center hover:bg-gray-100'><h1 className='inline-block'>{menu[0]}</h1><AiOutlineDown className='inline-block ml-1'/></div>
                 <div className='border-b-[1px]'></div>
                 <div className="dropdown-menu-list hidden">
-                <Link href={`/dashboard/${pathname.split("/")[2]}/${menu[1]}`}><h1 className='inline-block hover:bg-gray-100 w-full text-center'>{menu[1]}</h1></Link>
+                <Link href={`/dashboard/${menu[1]}/${pathname.split("/")[3]}`}><h1 className='inline-block hover:bg-gray-100 w-full text-center'>{menu[1]}</h1></Link>
                 <div className='border-b-[1px]'></div>
-                <Link href={`/dashboard/${pathname.split("/")[2]}/${menu[2]}`}><h1 className='inline-block hover:bg-gray-100 text-center w-full'>{menu[2]}</h1></Link>
+                <Link href={`/dashboard/${menu[2]}/${pathname.split("/")[3]}`}><h1 className='inline-block hover:bg-gray-100 text-center w-full'>{menu[2]}</h1></Link>
                 </div>              
                 {/* <div className='border-b-[1px]'></div> */}
             </div>
