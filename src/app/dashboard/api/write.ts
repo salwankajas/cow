@@ -38,7 +38,7 @@ function writeUserData({heading,day,month,time,poster,content,link,vanue,type,ye
       });
     }else if(type=="archives"){
       // getTimestamp(year!,months[month!],day!)
-      set(ref(db, `${soceity}/archives/` + getTimestamp(year!,months[month!],day!)), {
+      set(ref(db, `${soceity}/archives/` + getTimestamp(year!,months[month!],day!)),{
         heading:heading,
         day:day,
         month:month,
