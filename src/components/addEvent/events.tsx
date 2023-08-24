@@ -28,10 +28,12 @@ export default function Events(props:{soceity:string}){
             }
         }catch{
             setShow(false)
+            setData(datas);
             return;
         }
         if(Object.keys(data).length!=Object.keys(datas).length){
             setData(datas);
+            setShow(true)
         }else{
             setShow(false)
         }

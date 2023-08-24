@@ -32,6 +32,7 @@ export default function Archives(props:{soceity:string}){
         }
         if(Object.keys(data).length!=Object.keys(datas).length){
             setData(datas);
+            setShow(true)
         }else{
             setShow(false)
         }
