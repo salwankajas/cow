@@ -14,7 +14,7 @@ export default function Deploy() {
             deploy = "dpl_DQV4CAewrL5LRs68Z3tk6okR2Kzw"
             data = `{"deploymentId":"${deploy}","meta":{"action":"redeploy"},"name":"ieeesb","target":"production"}`
         } else if (events == "cs") {
-            deploy = "dpl_9ym7YRgEc7pujTc6AdzshBrZeRMH"
+            deploy = "dpl_8nuQNZSYkZhX9cz8WpYeVLYyyivV"
             data = `{"deploymentId":"${deploy}","meta":{"action":"redeploy"},"name":"ieeecs","target":"production"}`
         }
         fetch("https://api.vercel.com/v6/deployments", {
