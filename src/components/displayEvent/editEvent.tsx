@@ -3,7 +3,7 @@ import { editUserData } from "@/app/dashboard/api/edit"
 import { useState } from "react"
 import Image from "next/image"
 import Invalid from "../login/invalid"
-export default function EditEvent(props: { name: string, poster: string ,day:number,month:string,id:string,editoff:()=>void,time:string,link:string,content:string,vanue:string,soceity:string}){
+export default function EditEvent(props: { name: string, poster: string ,day:number,month:string,id:string,editoff:()=>void,time:string,link:string,content:string,vanue:string,soceity:string,ids:string}){
     const [uploadedposter,setUploadedposter] = useState(true)
     const [uploadingposter,setUploadingposter] = useState(false)
     const [invalid,setInvalid] = useState(false)
@@ -26,7 +26,7 @@ export default function EditEvent(props: { name: string, poster: string ,day:num
     const handleForm = (e:any)=>{
         e.preventDefault()
         if(!uploadingposter && uploadedposter){
-            editUserData({id:props.id,heading:e.target.heading.value,day:e.target.day.value,month:e.target.month.value,time:e.target.time.value,poster:posterurl,content:e.target.content.value,link:e.target.link.value,vanue:e.target.vanue.value?e.target.vanue.value:"null",type:"events",soceity:props.soceity})
+            editUserData({id:props.id,heading:e.target.heading.value,day:e.target.day.value,month:e.target.month.value,time:e.target.time.value,poster:posterurl,content:e.target.content.value,link:e.target.link.value,vanue:e.target.vanue.value?e.target.vanue.value:"null",type:"events",soceity:props.soceity,ids:e.target.ids.value})
             props.editoff()
         }else{
             setInvalid(true)
@@ -73,7 +73,11 @@ export default function EditEvent(props: { name: string, poster: string ,day:num
                                     <option value="Dec" >Dec</option>
                                 </select>
                             </div>
-                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" name="vanue" placeholder="Vanue (optional)" defaultValue={vanue()} />
+                            <div className="flex justify-between">
+                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-2/12 my-4" type="text" name="ids" placeholder="id" required defaultValue={props.ids}/>
+                            {/* <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-8/12 my-4" type="text" name="vanue" placeholder="Vanue (optional)"/>     */}
+                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-8/12 my-4" type="text" name="vanue" placeholder="Vanue (optional)" defaultValue={vanue()} />
+                            </div>
                             <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" name="link" placeholder="Link" required defaultValue={props.link}/>
                             <textarea className="inline-block focus:outline-none transition-all duration-200 focus:border-white focus:border-2 mx-auto h-auto bg-gray-600 text-white pl-2 placeholder:text-white w-full my-4" name="content" rows={6} placeholder="Contents" required defaultValue={props.content} />
                             {invalid?<Invalid strings="Poster Not Uploaded Or Uploading..."/>:<></>}

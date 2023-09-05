@@ -11,6 +11,7 @@ interface EventForm{
   type?:string;
   year?:number;
   soceity:string;
+  id:string;
 }
 
 function getTime() {
@@ -22,7 +23,7 @@ function getTimestamp(year:number,month:number,day:number){
   return date/1000
 }
 const months: { [key: string]: number }  = {"Jan":1,"Feb":2,"Mar":3,"Apr":4,"May":5,"Jun":6,"Jul":7,"Aug":8,"Sept":9,"Oct":10,"Nov":11,"Dec":12}
-function writeUserData({heading,day,month,time,poster,content,link,vanue,type,year,soceity}:EventForm) {
+function writeUserData({heading,day,month,time,poster,content,link,vanue,type,year,soceity,id}:EventForm) {
   if(soceity == "sb" || soceity=="cs"){
     const db = getDatabase();
     if(type=="events"){
@@ -35,6 +36,7 @@ function writeUserData({heading,day,month,time,poster,content,link,vanue,type,ye
         content:content,
         vanue:vanue,
         link:link,
+        id:id
       });
     }else if(type=="archives"){
       // getTimestamp(year!,months[month!],day!)
