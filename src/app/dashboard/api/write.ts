@@ -11,7 +11,7 @@ interface EventForm{
   type?:string;
   year?:number;
   soceity:string;
-  id:string;
+  id?:string;
 }
 
 function getTime() {

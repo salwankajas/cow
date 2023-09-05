@@ -28,7 +28,7 @@ interface EventForm{
   type?:string;
   year?:number;
   soceity:string;
-  ids:string;
+  ids?:string;
 }
 function getTimestamp(year:number,month:number,day:number){
   let date = Date.parse(`${month}/${day}/${year} ${Math.floor(Math.random() * (13))}:${Math.floor(Math.random() * (61))}:${Math.floor(Math.random() * (61))}`)
