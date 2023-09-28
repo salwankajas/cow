@@ -11,10 +11,10 @@ export default function Deploy() {
         let deploy;
         let data: any;
         if (events == "sb") {
-            deploy = "dpl_BTRWTBmhjkDxtZ5jpyhPfdzqfKpb"
+            deploy = "dpl_BMsZ8skdW1DV5hook4gaWp848MvR"
             data = `{"deploymentId":"${deploy}","meta":{"action":"redeploy"},"name":"ieeesb","target":"production"}`
         } else if (events == "cs") {
-            deploy = "dpl_3QjXqiLvVYmBimEkMaViAbCosL3k"
+            deploy = "dpl_CWcmeTcxkq2cr1XSXS8TxZQaMmRg"
             data = `{"deploymentId":"${deploy}","meta":{"action":"redeploy"},"name":"ieeecs","target":"production"}`
         }
         fetch("https://api.vercel.com/v6/deployments", {
