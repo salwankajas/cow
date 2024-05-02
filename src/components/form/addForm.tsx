@@ -1,5 +1,6 @@
 import { FiCheck, FiX } from "react-icons/fi"
-import { writeUserData } from "@/app/dashboard/api/write"
+import { addAnimal } from "@/app/dashboard/api/write"
+import {useAuthContext} from '@/context/AuthContext';
 import { useState } from "react"
 import Image from "next/image"
 import Invalid from "../login/invalid"
@@ -8,6 +9,7 @@ export default function AddForm(props: { remove: (value: boolean) => boolean,soc
     const [uploadingposter,setUploadingposter] = useState(false)
     const [invalid,setInvalid] = useState(false)
     const [posterurl,setPosterurl] = useState("")
+    const { user } = useAuthContext();
     const uploadImage = (e:any)=>{
         // console.log(e.target.files[0])
         const formData = new FormData();
@@ -17,7 +19,7 @@ export default function AddForm(props: { remove: (value: boolean) => boolean,soc
         fetch("https://api.imgur.com/3/image/",{
             method: "post",
             headers: {
-                Authorization: "Client-ID c893c9b6b15ef9d",
+                Authorization: "Client-ID d68107ed6c1cf3a",
             },
             body:formData
         }).then(data=>data.json()).then(data=>{if(data.data.link!=null){setUploadedposter(true);setPosterurl(data.data.link);setUploadingposter(false);}}).catch(e=>console.log(e))
@@ -25,7 +27,7 @@ export default function AddForm(props: { remove: (value: boolean) => boolean,soc
     const handleForm = (e:any)=>{
         e.preventDefault()
         if(!uploadingposter && uploadedposter){
-            writeUserData({heading:e.target.heading.value,day:e.target.day.value,month:e.target.month.value,time:e.target.time.value,poster:posterurl,content:e.target.content.value,link:e.target.link.value,vanue:e.target.vanue.value?e.target.vanue.value:"null",type:"events",soceity:props.soceity,id:e.target.ids.value})
+            addAnimal({photo:posterurl,insurance:e.target.Insurance_ID.value,name:e.target.names.value,age:e.target.age.value,mark:e.target.mark.value,breed:e.target.breed.value,user:user.current.uid})
             props.remove(false)
         }else{
             setInvalid(true)
@@ -42,16 +44,16 @@ export default function AddForm(props: { remove: (value: boolean) => boolean,soc
                         <div className="bg-gray-600 w-60 rounded-lg relative mx-auto bottom-[2rem] overflow-hidden shadow-2xl h-64 min-h-full">
                             {uploadedposter?<Image src={`${posterurl}`} alt="poster" width={0} height={0} sizes="100vw" className="absolute w-full h-full opacity-50"/>:<></>}
                             <label className="flex w-full h-full mx-auto text-lg rounded shadow-lg cursor-pointer text-center">
-                                <span className="m-auto z-[2]">Upload Poster</span>
+                                <span className="m-auto z-[2]">Upload Image</span>
                                 <input name='poster' type="file" className="hidden" required onChange={uploadImage}/>
                             </label>
                         </div>
                         <div className="text-center w-10/12 mx-auto">
-                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" placeholder="Heading" required name="heading"/>
+                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" placeholder="Insurance ID" required name="Insurance_ID"/>
                             <div className="flex justify-between">
-                                <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-3/12 my-4 mx-0" type="text" name="time" placeholder="Time" required />
-                                <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-3/12 my-4 mx-0" type="number" name="day" placeholder="Day" max="31" />
-                                <select className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 rounded-none bg-transparent text-white pl-2 placeholder:text-white w-3/12 appearance-none shadow-none my-4 mx-0" name="month">
+                                <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-3/12 my-4 mx-0" type="text" name="names" placeholder="Name" required />
+                                <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-3/12 my-4 mx-0" type="number" name="age" placeholder="Age" />
+                                {/* <select className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 rounded-none bg-transparent text-white pl-2 placeholder:text-white w-3/12 appearance-none shadow-none my-4 mx-0" name="month">
                                     <option value="Jan" >Jan</option>
                                     <option value="Feb" >Feb</option>
                                     <option value="Mar" >Mar</option>
@@ -64,14 +66,14 @@ export default function AddForm(props: { remove: (value: boolean) => boolean,soc
                                     <option value="Oct" >Oct</option>
                                     <option value="Nov" >Nov</option>
                                     <option value="Dec" >Dec</option>
-                                </select>
+                                </select> */}
                             </div>
+                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" name="mark" placeholder="Identification_Mark" required />
                             <div className="flex justify-between">
-                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-2/12 my-4" type="text" name="ids" placeholder="id" required/>
-                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-8/12 my-4" type="text" name="vanue" placeholder="Vanue (optional)"/>    
+                            {/* <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-2/12 my-4" type="text" name="ids" placeholder="id" required/> */}
+                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-8/12 my-4" type="text" name="breed" placeholder="breed"/>    
                             </div>
-                            <input className="inline-block focus:outline-none transition-all duration-200 focus:border-gray-500 mx-auto border-white border-b-2 bg-transparent text-white pl-2 placeholder:text-white w-full my-4" type="text" name="link" placeholder="Link" required />
-                            <textarea className="inline-block focus:outline-none transition-all duration-200 focus:border-white focus:border-2 mx-auto h-auto bg-gray-600 text-white pl-2 placeholder:text-white w-full my-4" name="content" rows={6} placeholder="Contents" required/>
+                            {/* <textarea className="inline-block focus:outline-none transition-all duration-200 focus:border-white focus:border-2 mx-auto h-auto bg-gray-600 text-white pl-2 placeholder:text-white w-full my-4" name="content" rows={6} placeholder="Contents" required/> */}
                             {invalid?<Invalid strings="Poster Not Uploaded Or Uploading..."/>:<></>}
                             <div className="text-center mt-5">
                                 <button className="bg-transparent shadow-none w-[auto]"><FiCheck className="inline text-2xl mx-auto font-thin stroke-[1.5]"/></button>

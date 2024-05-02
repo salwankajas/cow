@@ -1,19 +1,18 @@
-import { getDatabase, ref, remove } from "firebase/database";
+import { doc, updateDoc,deleteField } from 'firebase/firestore';
+import { db } from '@/firebase/config'; // Import your Firestore configuration
 
-// initialise database
-const db = getDatabase();
-
-export default function removes(id:string,type:string,soceity:string){
-  if(soceity == "sb" || soceity=="cs"){
-    let tasksRef = ref(db, `${soceity}/events/`+id);
-    if(type=="events"){
-      
-    }else if(type=='archives'){
-      tasksRef = ref(db, `${soceity}/archives/`+id);
-    }else if(type=='gallery'){
-      tasksRef = ref(db, `${soceity}/gallery/`+id);
-    }
-    remove(tasksRef).then(() => {
+async function removeAnimal({documentId, animalId}:{documentId:string,animalId:string}) {
+  try {
+    const docRef = doc(db, 'farmer', documentId); // Replace 'your_collection_name' with your actual collection name
+    await updateDoc(docRef, {
+      // Use Firestore's FieldValue.delete() to remove the animal field
+      [`animal.${animalId}`]: deleteField()
     });
+    window.location.reload();
+    console.log('Animal removed successfully');
+  } catch (error) {
+    console.error('Error removing animal:', error);
   }
 }
+
+export{removeAnimal}

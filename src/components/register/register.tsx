@@ -2,33 +2,33 @@
 import Image from "next/image"
 import '../../styles/globals.css'
 import Logo from "../../../public/asset/logo.svg"
-import { signIn } from './signin';
+import { signUp } from './signin';
 import { useRouter } from "next/navigation"
 import { useEffect, useLayoutEffect, useState } from "react"
 import { useAuthContext } from "@/context/AuthContext";
 import ReactLoading from 'react-loading';
 import Invalid from "./invalid";
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '@/firebase/config';
 import Link from "next/link";
-export default function Logins() {
+export default function Register() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
+    const [adhaar, setAdhaar] = useState('')
+    const [selectedValue, setSelectedValue] = useState("farmer");
     const [loading, setLoading] = useState(true)
     const [invalid, setInvalid] = useState(false)
-    const [selectedValue, setSelectedValue] = useState("farmer");
-
     const router = useRouter()
-    const { user, setRole, role, name } = useAuthContext()
+    const { user } = useAuthContext()
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+    
+
     const handleForm = async (event: any) => {
         event.preventDefault()
-        const { result, error } = await signIn(email, password);
-        setRole(selectedValue)
-        console.log(role);
-        const doctorRef = doc(db, selectedValue, result!.user.uid);
-        getDoc(doctorRef).then((e) => {
-            name.current =e.data()!["name"]
-        })
+
+        const { result, error } = await signUp(name,email,adhaar,password,selectedValue);
 
         if (error) {
             setInvalid(true)
@@ -42,11 +42,6 @@ export default function Logins() {
         // console.log(result)
         return router.push(`/dashboard/${selectedValue}`)
     }
-
-    const handleChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-
 
     useEffect(() => {
         if (!user.current) {
@@ -63,16 +58,17 @@ export default function Logins() {
                     <Image className="mx-auto " src={Logo} alt="Logo" width="180" height="180" />
                 </div>
                 </Link>
-                <h1 className="text-center font-semibold my-6 text-2xl">Sign in</h1>
+                <h1 className="text-center font-semibold my-6 text-2xl">Sign up</h1>
                 <form className="mx-auto" onSubmit={handleForm}>
                     <select value={selectedValue} onChange={handleChange} id="occupationSelect">
                         <option value="farmer">Farmer</option>
                         <option value="doctor">Doctor</option>
-                        <option value="admin">Admin</option>
                     </select>
+                    <input name="adhaar" type="number" placeholder="Adhaar Number" required onChange={(e) => setAdhaar(e.target.value)} />
+                    <input name="name" type="text" placeholder="User name" required onChange={(e) => setName(e.target.value)} />
                     <input name="email" type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
                     <input name="password" type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
-                    <input type="submit" value="Sign in" style={{color:"white"}} className="bg-blue-500 text-white font-semibold" />
+                    <input type="submit" value="Sign up" className="bg-blue-500 font-semibold text-blue" />
                 </form>
                 {invalid ? <Invalid strings="Invalid username or password" /> : <></>}
             </div>}

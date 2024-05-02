@@ -18,7 +18,7 @@ export default function EditEvent(props: { name: string, poster: string ,day:num
         fetch("https://api.imgur.com/3/image/",{
             method: "post",
             headers: {
-                Authorization: "Client-ID c893c9b6b15ef9d",
+                Authorization: "Client-ID d68107ed6c1cf3a",
             },
             body:formData
         }).then(data=>data.json()).then(data=>{if(data.data.link!=null){setUploadedposter(true);setPosterurl(data.data.link);setUploadingposter(false);}}).catch(e=>console.log(e))
