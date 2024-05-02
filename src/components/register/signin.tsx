@@ -5,7 +5,7 @@ export const auth = getAuth(firebase_app);
 const db = getFirestore(firebase_app)
 
 export async function signIn(email: string, password: string) {
-    let result = null, error = null;
+    let result:any = null, error:any = null;
     try {
         result = await signInWithEmailAndPassword(auth, email, password);
     } catch (e) {
@@ -14,7 +14,7 @@ export async function signIn(email: string, password: string) {
     return { result, error };
 }
 export async function signUp(name:string,email: string, adhaar:string,password: string, role: string) {
-    let result = null, error = null;
+    let result:any = null, error:any = null;
     try {
         result = await createUserWithEmailAndPassword(auth, email, password);
         const docRef = doc(db, role,result.user.uid);

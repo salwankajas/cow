@@ -22,13 +22,16 @@ export default function Logins() {
     const { user, setRole, role, name } = useAuthContext()
     const handleForm = async (event: any) => {
         event.preventDefault()
-        const { result, error } = await signIn(email, password);
+        const { result, error }:{result:any,error:any} = await signIn(email, password);
         setRole(selectedValue)
         console.log(role);
-        const doctorRef = doc(db, selectedValue, result!.user.uid);
-        getDoc(doctorRef).then((e) => {
-            name.current =e.data()!["name"]
-        })
+        if(result){
+
+            const doctorRef = doc(db, selectedValue, result!.user.uid);
+            getDoc(doctorRef).then((e) => {
+                name.current =e.data()!["name"]
+            })
+        }
 
         if (error) {
             setInvalid(true)
